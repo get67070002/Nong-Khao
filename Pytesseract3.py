@@ -8,20 +8,20 @@ import matplotlib.pyplot as plt
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 def preprocess_image(image_path):
-    # Read image
+    # อ่านภาพ
     img = cv2.imread(image_path)
 
-    # Convert to grayscale
+    # แปลงเป็นโทนสีเทาเพื่อประมวลผลรูปภาพให้มีประสิทธิภาพที่ดียิ่งขึ้น ทำให้มีจุดเล็กๆน้อยลง พื้นหลังสะอาดและข้อความคมชัดกว่าภาพสี
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    # Apply GaussianBlur to reduce noise and improve OCR accuracy
-    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+    # Apply GaussianBlur เพื่อลดการรบกวนและเพิ่มความถูกต้องของ ocr
+    blurred = cv2.GaussianBlur(gray, (3, 3), 0)
 
     thresh = cv2.adaptiveThreshold(blurred, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
 
 
-    # Apply thresholding for binarization
-    _, thresh = cv2.threshold(blurred, 127, 255, cv2.THRESH_BINARY)
+    # เพื่อแยกแยะระหว่าง ข้อความกับพื้นหลัง
+    _, thresh = cv2.threshold(blurred, 150, 255, cv2.THRESH_BINARY)
 
     return thresh
 
@@ -51,7 +51,7 @@ def thai_ocr_pipeline(image_path):
     print("OCR Complete.")
     return text
 
-image_path = 'sample3.png'
+image_path = 'sample4.png'
 extracted_text = thai_ocr_pipeline(image_path)
 print("Extracted Text:", extracted_text)
 
