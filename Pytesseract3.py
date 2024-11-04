@@ -26,27 +26,28 @@ def preprocess_image(image_path):
     return thresh
 
 def ocr_thai_text(image_path):
-    # Preprocess the image
+    # แปลงภาพเป็นขาวดำ ปรับคุณภาพของภาพ
     preprocessed_image = preprocess_image(image_path)
     
-    # Resize image for better OCR accuracy
+    # ปรับขนาดให้ใหฯ่เพื่อที่ OCR นั้นจะทำงานได้แม่นยำมากขึ้น
     img_resized = cv2.resize(preprocessed_image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
     
-    # Convert image to PIL format for pytesseract
+    # แปลงภาพเป็นรูปแบบ PIL เพื่อที่จะรองรับไลเบอรี่ pytesseract
     pil_image = Image.fromarray(img_resized)
     
-    # OCR with Thai language and configuration
+    # ทำให้ OCR อ่านค่าภาษาไทย และทำให้ข้อความนั้นเป็นข้อความเดียว 
+    # สามารถเปลี่ยนภาษาได้ที่ส่วนนี้
     text = pytesseract.image_to_string(pil_image, lang='tha', config='--psm 6')
     print("OCR Text:", text)  # แสดงข้อความที่ OCR ได้
     
     return text
 
-
+    # แปลงภาษาไทยในภาพให้เป็นขเอความตัวอักษร
 def thai_ocr_pipeline(image_path):
     print("Starting Thai OCR pipeline...")
-    thresh_image = preprocess_image(image_path)  # Get the processed image
-    plt.imshow(thresh_image, cmap='gray')  # Show the processed image
-    plt.show()  # Display the image
+    thresh_image = preprocess_image(image_path)  # รับภาพที่ผ่านการปรับแก้ไขแล้ว
+    plt.imshow(thresh_image, cmap='gray')  # แสดงภาพที่ปรับแก้ไข
+    plt.show()  # แสดงภาพนั้น
     text = ocr_thai_text(image_path)
     print("OCR Complete.")
     return text
@@ -55,8 +56,8 @@ image_path = 'sample4.png'
 extracted_text = thai_ocr_pipeline(image_path)
 print("Extracted Text:", extracted_text)
 
-# Testing with English language OCR
-# You can use this line to test with a separate image or the same one
-# Make sure to replace 'img_0.png' with the path to an image that contains English text if needed
+# ทดสอบด้วย OCR ภาษาอังกฤษ
+# คุณสามารถใช้โค้ดนี้เพื่อทดสอบด้วยภาพอื่น หรือใช้ภาพเดียวกันได้
+# อย่าลืมเปลี่ยน 'img_0.png' เป็นเส้นทางที่ถูกต้องไปยังภาพที่มีข้อความภาษาอังกฤษ
 # text = pytesseract.image_to_string(Image.open(image_path), lang='eng')  
 # print("Extracted English Text:", text)
