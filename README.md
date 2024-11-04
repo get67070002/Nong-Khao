@@ -1,2 +1,2 @@
-# Nong-Khao
-Food AI
+# OCR Thai language
+Upload your image file to convert to text!
