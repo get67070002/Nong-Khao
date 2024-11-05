@@ -33,11 +33,6 @@ def starting_ocr(image):
     print("OCR Complete.")
     return text
 
-def display_processed_image(image):
-    preprocessed_image = adjust_file(image)
-    if preprocessed_image is not None:
-        st.image(preprocessed_image, caption="Processed Image", channels="GRAY")
-
 def main():
     st.title("Thai Text OCR by Nong-Khao")
     st.subheader("*What is OCR?*")
