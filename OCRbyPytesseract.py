@@ -55,9 +55,3 @@ def thai_ocr_pipeline(image_path):
 image_path = 'sample4.png'
 extracted_text = thai_ocr_pipeline(image_path)
 print("Extracted Text:", extracted_text)
-
-# ทดสอบด้วย OCR ภาษาอังกฤษ
-# คุณสามารถใช้โค้ดนี้เพื่อทดสอบด้วยภาพอื่น หรือใช้ภาพเดียวกันได้
-# อย่าลืมเปลี่ยน 'img_0.png' เป็นเส้นทางที่ถูกต้องไปยังภาพที่มีข้อความภาษาอังกฤษ
-# text = pytesseract.image_to_string(Image.open(image_path), lang='eng')  
-# print("Extracted English Text:", text)
